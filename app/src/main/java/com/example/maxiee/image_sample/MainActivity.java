@@ -1,15 +1,17 @@
 package com.example.maxiee.image_sample;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,11 +41,15 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         );
-        layoutParams.setMargins(margin, margin, margin, margin);
+        layoutParams.setMargins(margin, 0, margin, 0);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int imageWidth = size.x - margin * 2;
         for (String url: urls) {
             ImageView imageView = new ImageView(this);
             mMainLayout.addView(imageView, layoutParams);
-            Glide.with(this).load(url).into(imageView);
+            Picasso.with(this).load(url).resize(imageWidth, 0).into(imageView);
         }
     }
 
